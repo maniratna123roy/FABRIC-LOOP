@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FABRIC LOOP | Our Impact</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #345ee9;
+            --secondary: #e27354;
+            --accent: #f5c853;
+            --highlight: #fa8068;
+            --dark: #000000;
+            --light: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Asap Condensed', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* Navbar Styles (Same as previous) */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+            background-color: var(--light);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            letter-spacing: 0.5px;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+            animation: spin 8s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            border: none;
+        }
+        
+        .btn-business {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-business:hover {
+            background-color: #2a4dc7;
+            transform: translateY(-2px);
+        }
+        
+        .btn-user {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+        
+        .btn-user:hover {
+            background-color: #e6b945;
+            transform: translateY(-2px);
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, rgba(52,94,233,0.1) 0%, rgba(226,115,84,0.1) 100%);
+            padding: 8rem 5% 4rem;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+        
+        .page-header p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            letter-spacing: 0.3px;
+        }
+        
+        /* Impact Stats Section */
+        .impact-stats {
+            padding: 5rem 5%;
+            background-color: var(--light);
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 3rem;
+            text-align: center;
+            letter-spacing: 0.3px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .stat-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .stat-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .stat-number::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .stat-label {
+            font-size: 1.2rem;
+            color: #666;
+            margin-top: 1.5rem;
+        }
+        
+        /* Circular Progress Bars */
+        .progress-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1.5rem;
+            position: relative;
+        }
+        
+        .progress-circle {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+        
+        .progress-bg {
+            fill: none;
+            stroke: #f0f0f0;
+            stroke-width: 8;
+        }
+        
+        .progress-bar {
+            fill: none;
+            stroke: var(--primary);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 440;
+            stroke-dashoffset: 440;
+            animation: progress 1.5s ease-in-out forwards;
+        }
+        
+        @keyframes progress {
+            to {
+                stroke-dashoffset: var(--offset);
+            }
+        }
+        
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        /* Community Impact Section */
+        .community-impact {
+            padding: 5rem 5%;
+            background-color: #f5f7fa;
+        }
+        
+        .community-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .community-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .community-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+        
+        .community-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .community-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .community-content {
+            padding: 2rem;
+        }
+        
+        .community-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .community-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+        
+        .community-stat {
+            text-align: center;
+        }
+        
+        .community-stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .community-stat-label {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        /* Environmental Impact Section */
+        .environmental-impact {
+            padding: 5rem 5%;
+            background-color: var(--light);
+        }
+        
+        .environment-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .environment-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .environment-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease 0.1s;
+        }
+        
+        .environment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .environment-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .environment-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .environment-label {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        /* Testimonials Section */
+        .testimonials {
+            padding: 5rem 5%;
+            background-color: #f5f7fa;
+        }
+        
+        .testimonial-slider {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin: 0 1rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .testimonial-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .testimonial-content {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .testimonial-content::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--accent);
+            opacity: 0.2;
+            position: absolute;
+            top: -20px;
+            left: -10px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+        }
+        
+        .author-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .author-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .author-role {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 5rem 5%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--highlight) 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn-primary {
+            background-color: white;
+            color: var(--primary);
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 5%;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-column {
+            width: 23%;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #333;
+            color: #999;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .stats-grid, .environment-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .community-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-column {
+                width: 48%;
+                margin-bottom: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                margin: 1rem 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .auth-buttons {
+                margin-top: 1rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .page-header p {
+                font-size: 1.1rem;
+            }
+            
+            .stats-grid, .environment-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-column {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .page-header {
+                padding: 6rem 5% 3rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-recycle"></i>
+            FABRIC<span>LOOP</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="processes.html">Processes</a>
+            <a href="impact.html" class="active">Impact</a>
+            <a href="marketplace.html">Cloth Marketplace</a>
+        </div>
+        <div class="auth-buttons">
+            <button class="btn btn-business">Business Login</button>
+            <button class="btn btn-user">User Login</button>
+        </div>
+    </nav>
+    
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>Our Impact</h1>
+        <p>Measuring the difference we make in environmental conservation and community support through our circular fashion model</p>
+    </section>
+    
+    <!-- Impact Stats Section -->
+    <section class="impact-stats">
+        <h2 class="section-title">Waste Diverted From Landfills</h2>
+        <p class="section-subtitle">Our AI-powered system has transformed textile waste into valuable resources</p>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="progress-container">
+                    <svg class="progress-circle" viewBox="0 0 100 100" style="--offset: 132;">
+                        <circle class="progress-bg" cx="50" cy="50" r="45"></circle>
+                        <circle class="progress-bar" cx="50" cy="50" r="45"></circle>
+                    </svg>
+                    <div class="progress-text">3.2M</div>
+                </div>
+                <div class="stat-label">Pounds of fabric waste recycled annually</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-percentage"></i></div>
+                <div class="stat-number">87%</div>
+                <div class="stat-label">Of collected materials successfully repurposed</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="progress-container">
+                    <svg class="progress-circle" viewBox="0 0 100 100" style="--offset: 220;">
+                        <circle class="progress-bg" cx="50" cy="50" r="45"></circle>
+                        <circle class="progress-bar" cx="50" cy="50" r="45"></circle>
+                    </svg>
+                    <div class="progress-text">1.5K</div>
+                </div>
+                <div class="stat-label">Business partners contributing waste</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Community Impact Section -->
+    <section class="community-impact">
+        <h2 class="section-title">Communities We've Supported</h2>
+        <p class="section-subtitle">Providing quality clothing to those in need through our network of partners</p>
+        
+        <div class="community-grid">
+            <div class="community-card">
+                <img src="https://images.unsplash.com/photo-1544441893-675973e31985?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Orphanage Support" class="community-image">
+                <div class="community-content">
+                    <h3 class="community-title">Orphanages & Children's Homes</h3>
+                    <p>We've provided quality clothing to children in 120+ orphanages across the country, helping them dress with dignity.</p>
+                    <div class="community-stats">
+                        <div class="community-stat">
+                            <div class="community-stat-number">120+</div>
+                            <div class="community-stat-label">Facilities</div>
+                        </div>
+                        <div class="community-stat">
+                            <div class="community-stat-number">15K</div>
+                            <div class="community-stat-label">Children</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="community-card">
+                <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1399&q=80" alt="Elderly Support" class="community-image">
+                <div class="community-content">
+                    <h3 class="community-title">Senior Care Facilities</h3>
+                    <p>Our comfortable, easy-to-wear clothing has improved quality of life for residents in 85+ elderly care homes.</p>
+                    <div class="community-stats">
+                        <div class="community-stat">
+                            <div class="community-stat-number">85+</div>
+                            <div class="community-stat-label">Homes</div>
+                        </div>
+                        <div class="community-stat">
+                            <div class="community-stat-number">7.5K</div>
+                            <div class="community-stat-label">Seniors</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Environmental Impact Section -->
+    <section class="environmental-impact">
+        <h2 class="section-title">Environmental Benefits</h2>
+        <p class="section-subtitle">The positive ecological impact of choosing circular fashion</p>
+        
+        <div class="environment-grid">
+            <div class="environment-card">
+                <div class="environment-icon"><i class="fas fa-tint"></i></div>
+                <div class="environment-number">64M</div>
+                <div class="environment-label">Liters of water saved annually</div>
+            </div>
+            
+            <div class="environment-card">
+                <div class="environment-icon"><i class="fas fa-cloud"></i></div>
+                <div class="environment-number">2.8K</div>
+                <div class="environment-label">Tons of CO2 emissions prevented</div>
+            </div>
+            
+            <div class="environment-card">
+                <div class="environment-icon"><i class="fas fa-trash"></i></div>
+                <div class="environment-number">78%</div>
+                <div class="environment-label">Reduction in textile landfill waste</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <h2 class="section-title">What Our Partners Say</h2>
+        <p class="section-subtitle">Hear from businesses and organizations that work with FABRIC LOOP</p>
+        
+        <div class="testimonial-slider">
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    FABRIC LOOP has transformed how we handle our production waste. Their AI sorting system is incredibly accurate, and we've seen a 90% reduction in our textile waste disposal costs while knowing our materials are being put to good use.
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Sarah Johnson" class="author-avatar">
+                    <div class="author-info">
+                        <div class="author-name">Sarah Johnson</div>
+                        <div class="author-role">Sustainability Director, Urban Apparel Co.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    The clothing we receive from FABRIC LOOP has been a godsend for our children's home. The quality is excellent, and it's made a real difference in our operating budget. We're able to allocate more funds to education and healthcare thanks to this partnership.
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen" class="author-avatar">
+                    <div class="author-info">
+                        <div class="author-name">Michael Chen</div>
+                        <div class="author-role">Director, Bright Future Orphanage</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    As a small tailoring business, we used to throw away so much fabric. Now with FABRIC LOOP, not only are we reducing waste, but we're actually earning from our scraps. It's changed our entire approach to material usage.
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Elena Rodriguez" class="author-avatar">
+                    <div class="author-info">
+                        <div class="author-name">Elena Rodriguez</div>
+                        <div class="author-role">Owner, Stitch Perfect Tailoring</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta">
+        <h2>Be Part of the Change</h2>
+        <p>Join our growing network of businesses, NGOs, and conscious consumers making a real difference in sustainable fashion.</p>
+        <button class="btn-primary">Join FABRIC LOOP</button>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>FABRIC LOOP</h3>
+                <p style="color: #ccc;">Closing the loop in fashion through innovation and sustainability.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="processes.html">Processes</a></li>
+                    <li><a href="impact.html">Impact</a></li>
+                    <li><a href="marketplace.html">Marketplace</a></li>
+                    <li><a href="#">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>For Businesses</h3>
+                <ul>
+                    <li><a href="#">Sell Your Scrap</a></li>
+                    <li><a href="#">Partnerships</a></li>
+                    <li><a href="#">Sustainability Reports</a></li>
+                    <li><a href="#">API Integration</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Green St, Eco City</li>
+                    <li><i class="fas fa-phone"></i> (123) 456-7890</li>
+                    <li><i class="fas fa-envelope"></i> info@fabricloop.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 FABRIC LOOP. All rights reserved.
+        </div>
+    </footer>
+    
+    <script>
+        // Animation for impact elements
+        document.addEventListener('DOMContentLoaded', function() {
+            const statCards = document.querySelectorAll('.stat-card');
+            const communityCards = document.querySelectorAll('.community-card');
+            const environmentCards = document.querySelectorAll('.environment-card');
+            const testimonialCards = document.querySelectorAll('.testimonial-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            // Animate stats
+            statCards.forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.2}s`;
+                observer.observe(card);
+            });
+            
+            // Animate community cards
+            communityCards.forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.3}s`;
+                observer.observe(card);
+            });
+            
+            // Animate environment cards
+            environmentCards.forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.2}s`;
+                observer.observe(card);
+            });
+            
+            // Animate testimonials with staggered delay
+            testimonialCards.forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.4}s`;
+                observer.observe(card);
+            });
+            
+            // Animate progress bars
+            const progressBars = document.querySelectorAll('.progress-bar');
+            progressBars.forEach(bar => {
+                observer.observe(bar.parentElement.parentElement);
+            });
+        });
+    </script>
+</body>
+</html>

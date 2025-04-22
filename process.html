@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FABRIC LOOP | Our Process</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #345ee9;
+            --secondary: #e27354;
+            --accent: #f5c853;
+            --highlight: #fa8068;
+            --dark: #000000;
+            --light: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Asap Condensed', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* Navbar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+            background-color: var(--light);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            letter-spacing: 0.5px;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+            animation: spin 8s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            border: none;
+        }
+        
+        .btn-business {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-business:hover {
+            background-color: #2a4dc7;
+            transform: translateY(-2px);
+        }
+        
+        .btn-user {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+        
+        .btn-user:hover {
+            background-color: #e6b945;
+            transform: translateY(-2px);
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, rgba(52,94,233,0.1) 0%, rgba(226,115,84,0.1) 100%);
+            padding: 8rem 5% 4rem;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+        
+        .page-header p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            letter-spacing: 0.3px;
+        }
+        
+        /* Flowchart Section */
+        .flowchart-section {
+            padding: 5rem 5%;
+            background-color: var(--light);
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 3rem;
+            text-align: center;
+            letter-spacing: 0.3px;
+        }
+        
+        .flowchart {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        
+        .flowchart-line {
+            position: absolute;
+            left: 50%;
+            top: 50px;
+            width: 4px;
+            height: calc(100% - 100px);
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+        
+        .process-step {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+            z-index: 2;
+        }
+        
+        .process-step.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .step-card {
+            width: 45%;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .step-card.left {
+            margin-right: auto;
+        }
+        
+        .step-card.right {
+            margin-left: auto;
+        }
+        
+        .step-number {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+        }
+        
+        .step-card.left .step-number {
+            right: -30px;
+            left: auto;
+            background-color: var(--secondary);
+        }
+        
+        .step-card.right .step-number {
+            left: -30px;
+            background-color: var(--highlight);
+        }
+        
+        .step-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .step-card.left .step-icon {
+            color: var(--secondary);
+        }
+        
+        .step-card.right .step-icon {
+            color: var(--highlight);
+        }
+        
+        .step-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            text-align: center;
+        }
+        
+        .step-desc {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .step-image {
+            width: 45%;
+            height: 300px;
+            border-radius: 15px;
+            object-fit: cover;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Process Benefits */
+        .process-benefits {
+            padding: 5rem 5%;
+            background-color: #f5f7fa;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .benefit-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .benefit-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .benefit-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .benefit-desc {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 5rem 5%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--highlight) 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn-primary {
+            background-color: white;
+            color: var(--primary);
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 5%;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-column {
+            width: 23%;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #333;
+            color: #999;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .process-step {
+                flex-direction: column;
+                margin-bottom: 3rem;
+            }
+            
+            .step-card, .step-image {
+                width: 100%;
+                margin: 0 0 2rem 0 !important;
+            }
+            
+            .step-card.left .step-number, 
+            .step-card.right .step-number {
+                left: 50%;
+                right: auto;
+                top: -30px;
+                transform: translateX(-50%);
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-column {
+                width: 48%;
+                margin-bottom: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                margin: 1rem 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .auth-buttons {
+                margin-top: 1rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .page-header p {
+                font-size: 1.1rem;
+            }
+            
+            .footer-column {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .page-header {
+                padding: 6rem 5% 3rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-recycle"></i>
+            FABRIC<span>LOOP</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="processes.html" class="active">Processes</a>
+            <a href="impact.html">Impact</a>
+            <a href="marketplace.html">Cloth Marketplace</a>
+        </div>
+        <div class="auth-buttons">
+            <button class="btn btn-business">Business Login</button>
+            <button class="btn btn-user">User Login</button>
+        </div>
+    </nav>
+    
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>Our Circular Process</h1>
+        <p>Discover how FABRIC LOOP transforms textile waste into valuable resources through our innovative AI-powered system</p>
+    </section>
+    
+    <!-- Flowchart Section -->
+    <section class="flowchart-section">
+        <h2 class="section-title">The FABRIC LOOP Workflow</h2>
+        <p class="section-subtitle">A seamless integration of technology and sustainability</p>
+        
+        <div class="flowchart">
+            <div class="flowchart-line"></div>
+            
+            <div class="process-step">
+                <div class="step-card left">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i class="fas fa-industry"></i></div>
+                    <h3 class="step-title">Waste Collection</h3>
+                    <p class="step-desc">
+                        We partner with fashion brands, manufacturers, and tailors to collect their fabric scraps and textile waste. 
+                        Our logistics network ensures efficient pickup from your location with minimal disruption to your operations.
+                    </p>
+                </div>
+                <img src="clothe waste.jpg" alt="Waste Collection" class="step-image">
+            </div>
+            
+            <div class="process-step">
+                <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80" alt="AI Sorting" class="step-image">
+                <div class="step-card right">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i class="fas fa-robot"></i></div>
+                    <h3 class="step-title">AI-Powered Sorting</h3>
+                    <p class="step-desc">
+                        Our advanced AI system analyzes each piece of collected material, categorizing it as either reusable or recyclable with 98% accuracy. 
+                        The system considers fabric type, condition, color, and potential applications.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="process-step">
+                <div class="step-card left">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i class="fas fa-hands-helping"></i></div>
+                    <h3 class="step-title">Reusable Distribution</h3>
+                    <p class="step-desc">
+                        High-quality reusable garments and fabrics are cleaned, repaired if needed, and distributed to our network of NGOs, 
+                        orphanages, and shelters at minimal cost. Each partner is vetted to ensure ethical distribution.
+                    </p>
+                </div>
+                <img src="https://images.unsplash.com/photo-1600267165477-6d4cc741b379?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Reusable Distribution" class="step-image">
+            </div>
+            
+            <div class="process-step">
+                <img src="clothe recycle.jpg" alt="Material Recycling" class="step-image">
+                <div class="step-card right">
+                    <div class="step-number">4</div>
+                    <div class="step-icon"><i class="fas fa-recycle"></i></div>
+                    <h3 class="step-title">Material Recycling</h3>
+                    <p class="step-desc">
+                        Recyclable materials undergo our proprietary breakdown process, transforming them into raw fibers. 
+                        These fibers are then spun into new yarns, creating the foundation for sustainable new textiles.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="process-step">
+                <div class="step-card left">
+                    <div class="step-number">5</div>
+                    <div class="step-icon"><i class="fas fa-tshirt"></i></div>
+                    <h3 class="step-title">New Product Creation</h3>
+                    <p class="step-desc">
+                        Our design team creates contemporary fashion pieces from the recycled materials. 
+                        Each product carries information about its recycled content and environmental impact savings.
+                    </p>
+                </div>
+                <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="New Product Creation" class="step-image">
+            </div>
+            
+            <div class="process-step">
+                <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Marketplace" class="step-image">
+                <div class="step-card right">
+                    <div class="step-number">6</div>
+                    <div class="step-icon"><i class="fas fa-shopping-bag"></i></div>
+                    <h3 class="step-title">Sustainable Marketplace</h3>
+                    <p class="step-desc">
+                        The newly created sustainable fashion items are sold through our online marketplace, 
+                        completing the loop and funding the continuation of our circular economy model.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Process Benefits -->
+    <section class="process-benefits">
+        <h2 class="section-title">Why Our Process Works</h2>
+        <p class="section-subtitle">Key advantages of the FABRIC LOOP system</p>
+        
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fas fa-bolt"></i></div>
+                <h3 class="benefit-title">Efficiency</h3>
+                <p class="benefit-desc">
+                    Our automated sorting and processing reduces handling time by 70% compared to traditional methods, 
+                    allowing us to process larger volumes with greater accuracy.
+                </p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fas fa-leaf"></i></div>
+                <h3 class="benefit-title">Sustainability</h3>
+                <p class="benefit-desc">
+                    Each kilogram of material processed through our system saves approximately 20,000 liters of water 
+                    and prevents 8kg of CO2 emissions compared to virgin material production.
+                </p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fas fa-chart-line"></i></div>
+                <h3 class="benefit-title">Transparency</h3>
+                <p class="benefit-desc">
+                    Our blockchain tracking system provides complete visibility into the journey of each material, 
+                    from waste collection to final product.
+                </p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                <h3 class="benefit-title">Social Impact</h3>
+                <p class="benefit-desc">
+                    Beyond environmental benefits, our model creates jobs in green technology and provides 
+                    affordable clothing to communities in need.
+                </p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fas fa-cogs"></i></div>
+                <h3 class="benefit-title">Scalability</h3>
+                <p class="benefit-desc">
+                    Our modular system design allows for rapid expansion to new regions and adaptation to 
+                    different types of textile waste streams.
+                </p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fas fa-dollar-sign"></i></div>
+                <h3 class="benefit-title">Economic Value</h3>
+                <p class="benefit-desc">
+                    Partners monetize what was previously waste, while consumers access sustainable fashion 
+                    at competitive prices.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta">
+        <h2>Ready to Join the Circular Economy?</h2>
+        <p>Whether you're a business with textile waste to donate or a conscious consumer looking for sustainable fashion, we have solutions for you.</p>
+        <button class="btn-primary">Get Started Today</button>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>FABRIC LOOP</h3>
+                <p style="color: #ccc;">Closing the loop in fashion through innovation and sustainability.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="processes.html">Processes</a></li>
+                    <li><a href="impact.html">Impact</a></li>
+                    <li><a href="marketplace.html">Marketplace</a></li>
+                    <li><a href="#">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>For Businesses</h3>
+                <ul>
+                    <li><a href="#">Sell Your Scrap</a></li>
+                    <li><a href="#">Partnerships</a></li>
+                    <li><a href="#">Sustainability Reports</a></li>
+                    <li><a href="#">API Integration</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Green St, Eco City</li>
+                    <li><i class="fas fa-phone"></i> (123) 456-7890</li>
+                    <li><i class="fas fa-envelope"></i> info@fabricloop.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 FABRIC LOOP. All rights reserved.
+        </div>
+    </footer>
+    
+    <script>
+        // Animation for flowchart steps
+        document.addEventListener('DOMContentLoaded', function() {
+            const processSteps = document.querySelectorAll('.process-step');
+            const benefitCards = document.querySelectorAll('.benefit-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            processSteps.forEach(step => {
+                observer.observe(step);
+            });
+            
+            benefitCards.forEach((card, index) => {
+                // Stagger the animation
+                card.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
